@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+    mysql:
+        build:
+            context: ./database
+            dockerfile: Dockerfile
+        container_name: my-mysql-container
+        restart: always
+        environment:
+            MYSQL_ALLOW_EMPTY_PASSWORD: true
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+        ports:
+            - ${DB_PORT}:${DB_PORT}
+        volumes:
+            - mysql_data:/var/lib/mysql
+        networks:
+            - my-network
+
+volumes:
+    mysql_data:
+
+networks:
+    my-network:
+        driver: bridge
