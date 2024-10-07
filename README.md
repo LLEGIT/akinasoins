@@ -9,6 +9,7 @@
 
 ## Setup project
 - Create the `.env` file from `.env.example` with your own values
+- Run `composer install`
 - Make sure to have Docker installed on your machine, run `docker compose up --build`
 - Run `php artisan migrate` to setup db
 - Once the database is up you can run `php artisan serve`
