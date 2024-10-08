@@ -13,6 +13,7 @@
 - Make sure to have Docker installed on your machine, run `docker compose up --build`
 - Run `php artisan migrate` to setup db
 - Once the database is up you can run `php artisan serve`
+- Run `npm install` then `npm run build` to make tailwind work
 - Navigate to http://127.0.0.1:8000
 
 ## About Laravel
