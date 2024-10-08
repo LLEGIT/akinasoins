@@ -5,11 +5,11 @@ resource "azurerm_resource_group" "ressource_group_akinasoins" {
 
 resource "azurerm_mysql_server" "sqlserverterra" {
   name                = "sqlserver"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.ressource_group_akinasoins.name
+  location            = azurerm_resource_group.ressource_group_akinasoins.location
   version             = "5.7"
   administrator_login = "test"
-  administrator_login_password = "testestest123"  # Change this to a secure password
+  administrator_login_password = "testestest123" 
   sku {
     name     = "B_Gen5_1"
     tier     = "Basic"
@@ -30,45 +30,26 @@ resource "azurerm_mysql_database" "akinasoinsBDDterra" {
   collation           = "utf8_general_ci"
 }
 
-resource "azurerm_kubernetes_cluster" "aks_appli" {
-  name                = "AKSAkinasoins"
-  location            = azurerm_resource_group.location_terra.location
+
+
+resource "azurerm_app_service_plan" "app_service_plan" {
+  name                = "myAppServicePlan"
+  location            = azurerm_resource_group.ressource_group_akinasoins.location
   resource_group_name = azurerm_resource_group.ressource_group_akinasoins.name
-  dns_prefix          = "myaks"
-
-  agent_pool_profile {
-    name            = "agentpool"
-    count           = 3
-    vm_size        = "Standard_DS2_v2"
-    os_type        = "Linux"
-  }
-
-  linux_profile {
-    admin_username = "azureuser"
-    ssh_key {
-      key_data = file("~/.ssh/id_rsa.pub")  # Assurez-vous d'avoir une clé SSH générée
-    }
-  }
-
-  service_principal {
-    client_id     = var.client_id  # Remplacez par votre client_id
-    client_secret = var.client_secret  # Remplacez par votre client_secret
-  }
-
-  role_based_access_control {
-    enabled = true
+  sku {
+    tier     = "Basic"
+    size     = "B1"
   }
 }
 
-resource "random_string" "server_suffix" {
-  length  = 8
-  special = false
+resource "azurerm_app_service" "web_app" {
+  name                = "Akinasoins"
+  location            = azurerm_resource_group.ressource_group_akinasoins.location
+  resource_group_name = azurerm_resource_group.ressource_group_akinasoins.name
+  app_service_plan_id = azurerm_app_service_plan.app_service_plan.name
+
+  site_config {
+    always_on = true
+  }
 }
 
-output "mysql_server_fqdn" {
-  value = azurerm_mysql_server.mysql_server.fully_qualified_domain_name
-}
-
-output "aks_cluster_name" {
-  value = azurerm_kubernetes_cluster.aks.name
-}
