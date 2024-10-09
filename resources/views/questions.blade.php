@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <!DOCTYPE html>
-<html>
 <head>
     <title>ChatGPT Integration</title>
 </head>
@@ -19,6 +17,5 @@
         <p>{{ $response }}</p>
     @endif
 </body>
-</html>
 
 </html>
