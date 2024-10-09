@@ -20,7 +20,7 @@
         </div>
 
         <div class="flex-1 flex items-center justify-center">
-            @yield('home')
+            @yield('content')
         </div>
 
     </div>

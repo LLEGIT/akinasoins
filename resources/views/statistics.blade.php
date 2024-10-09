@@ -1,15 +1,15 @@
 @extends('layout')
 
-@section('statistics')
+@section('content')
 <div class="flex-1 flex items-center justify-center p-4">
     <ul class="list-disc text-left">
-        <li>{{ $pourcentage['antecedent'] }}% de nos utilisateurs ont des antécédents médicaux graves</li>
-        <li>{{ $pourcentage['fumeur'] }}% des diagnostiqués déclarent fumer ou boire de l’alcool régulièrement
-        </li>
-        <li>{{ $pourcentage['consulteGeneraliste'] }} des diagnostics se concluent par un aiguillage vers un
-            mèdecin
-            généraliste</li>
-        <li>{{ $pourcentage['troubleMental'] }} des troubles diagnostiqués sont d’ordre mental</li>
+        <li>{{ $smoker_count }}% de nos utilisateurs sont des fumeurs</li>
+        <li>{{ $drinks_alcohol_count }}% de nos utilisateurs boivent de l'alcool régulièrement</li>
+        <li>{{ $mental_disorder_count }}% des troubles diagnostiqués sont d’ordre mental</li>
+        <li>{{ $physical_disorder_count }}% des troubles diagnostiqués sont d’ordre physique</li>
+        <li>{{ $has_medical_history_count }}% de nos utilisateurs ont des antécédents médicaux</li>
+        <li>{{ $physical_activity_count }}% de nos utilisateurs pratiquent une activité physique</li>
+
     </ul>
 </div>
 @endsection
