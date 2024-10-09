@@ -2,16 +2,24 @@
 
 namespace App\Http\Controllers;
 
-class StatisticsController extends Controller
-{
+use App\Services\DiagnosisService;
+
+class StatisticsController extends Controller {
+
+protected $diagnosisService;
+
+    public function __construct(DiagnosisService $diagnosisService)
+    {
+        $this->diagnosisService = $diagnosisService;
+    }
+
+
     public function index()
     {
-        $pourcentage = [
-            'antecedent' => '30',
-            'fumeur' => '40',
-            'consulteGeneraliste' => '50',
-            'troubleMental' => '60'
-        ];
-        return view('statistics', compact('pourcentage'));
+
+        $pourcent = $this->diagnosisService->getStatistics();
+
+
+        return view('statistics', compact('pourcent'));
     }
 }
