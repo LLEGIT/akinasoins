@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit;
 
+use App\Enums\DisorderType;
 use App\Repositories\DiagnosisRepository;
 use App\Services\DiagnosisService;
 use PHPUnit\Framework\TestCase;
@@ -22,7 +23,8 @@ class DiagnosisServiceTest extends TestCase
                 'smoker_count' => 0,
                 'drinks_alcohol_count' => 0,
                 'physical_activity_count' => 0,
-                'has_disorder_count' => 0,
+                'mental_disorder_count' => 0,
+                'physical_disorder_count' => 0,
                 'has_medical_history_count' => 0,
                 'has_allergies_count' => 0,
             ],
@@ -37,7 +39,7 @@ class DiagnosisServiceTest extends TestCase
                 'smoker' => true,
                 'physical_activity' => true,
                 'drinks_alcohol' => true,
-                'has_disorder_type' => false,
+                'disorder_type' => DisorderType::MENTAL,
                 'has_medical_history' => true,
                 'has_allergies' => false,
             ],
@@ -45,7 +47,7 @@ class DiagnosisServiceTest extends TestCase
                 'smoker' => false,
                 'physical_activity' => true,
                 'drinks_alcohol' => false,
-                'has_disorder_type' => true,
+                'disorder_type' => DisorderType::PHYSICAL,
                 'has_medical_history' => false,
                 'has_allergies' => true,
             ],
@@ -53,7 +55,7 @@ class DiagnosisServiceTest extends TestCase
                 'smoker' => true,
                 'physical_activity' => true,
                 'drinks_alcohol' => false,
-                'has_disorder_type' => true,
+                'disorder_type' => DisorderType::MENTAL,
                 'has_medical_history' => true,
                 'has_allergies' => true,
             ],
@@ -68,7 +70,8 @@ class DiagnosisServiceTest extends TestCase
             'smoker_count' => round(2 / 3 * 100),
             'drinks_alcohol_count' => round(1 / 3 * 100),
             'physical_activity_count' => 100,
-            'has_disorder_count' => round(2 / 3 * 100),
+            'mental_disorder_count' => 67,
+            'physical_disorder_count' => 33,
             'has_medical_history_count' => round(2 / 3 * 100),
             'has_allergies_count' => round(2 / 3 * 100),
         ];
