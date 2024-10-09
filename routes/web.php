@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatGPTController;
+use App\Http\Controllers\DiagnosisController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('app');
@@ -9,5 +10,9 @@ Route::get('/', function () {
 Route::post('/reponse', function () {
     return view('welcome');
 });
-// Route::post('/ask-chatgpt', action: [ChatGPTController::class, 'ask']);
+
 Route::post('/ask-chatgpt', [ChatGPTController::class, 'ask'])->name('ask.chatgpt');
+
+Route::post('/diagnosis', [DiagnosisController::class, 'create']);
+Route::get('/diagnosis/all', [DiagnosisController::class, 'getAll']);
+Route::get('/diagnosis/statistics', [DiagnosisController::class, 'getStatistics']);
