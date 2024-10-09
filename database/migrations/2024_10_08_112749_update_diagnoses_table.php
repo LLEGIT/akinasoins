@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('diagnoses', function (Blueprint $table) {
-            $table->boolean('has_disorder_type')->default(false);
+            $table->enum('disorder_type', ['mental', 'physical'])->default('physical');
             $table->boolean('has_medical_history')->default(false);
             $table->boolean('physical_activity')->default(false);
             $table->boolean('smoker')->default(false);

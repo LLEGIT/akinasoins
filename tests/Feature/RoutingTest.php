@@ -15,7 +15,7 @@ class RoutingTest extends TestCase
     {
         $homeResponse = $this->get('/');
         $homeResponse->assertStatus(200);
-        $homeResponse->assertViewIs('app');
+        $homeResponse->assertViewIs('home');
 
         $allDiagnosesResponse = $this->get('/diagnosis/all');
         $allDiagnosesResponse->assertStatus(200);
@@ -24,6 +24,6 @@ class RoutingTest extends TestCase
         $diagnosesStatisticsResponse = $this->get('/diagnosis/statistics');
         $diagnosesStatisticsResponse->assertStatus(200);
         $allDiagnosesResponse->assertJsonIsArray();
-        $diagnosesStatisticsResponse->assertJsonCount(5);
+        $diagnosesStatisticsResponse->assertJsonCount(7);
     }
 }

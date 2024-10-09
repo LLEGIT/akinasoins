@@ -29,7 +29,7 @@ class Diagnosis extends Model
      * @var array
      */
     protected $fillable = [
-        'has_disorder_type',
+        'disorder_type',
         'has_medical_history',
         'physical_activity',
         'smoker',
