@@ -5,7 +5,7 @@ use App\Http\Controllers\DiagnosisController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('app');
+    return view('welcome');
 });
 Route::post('/reponse', function () {
     return view('welcome');
@@ -16,3 +16,4 @@ Route::post('/ask-chatgpt', [ChatGPTController::class, 'ask'])->name('ask.chatgp
 Route::post('/diagnosis', [DiagnosisController::class, 'create']);
 Route::get('/diagnosis/all', [DiagnosisController::class, 'getAll']);
 Route::get('/diagnosis/statistics', [DiagnosisController::class, 'getStatistics']);
+Route::get('/questions', [ChatGPTController::class, 'initialize_game']);
