@@ -15,3 +15,4 @@ Route::post('/ask-chatgpt', [ChatGPTController::class, 'ask'])->name('ask.chatgp
 
 Route::post('/diagnosis', [DiagnosisController::class, 'create']);
 Route::get('/diagnosis/all', [DiagnosisController::class, 'getAll']);
+Route::get('/diagnosis/statistics', [DiagnosisController::class, 'getStatistics']);
