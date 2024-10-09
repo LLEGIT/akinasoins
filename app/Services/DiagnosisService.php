@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Enums\DisorderType;
 use App\Repositories\DiagnosisRepository;
 
 readonly class DiagnosisService
@@ -35,10 +36,11 @@ readonly class DiagnosisService
 
         if ([] === $diagnoses) {
             return [
+                'mental_disorder_count' => 0,
+                'physical_disorder_count' => 0,
                 'smoker_count' => 0,
                 'drinks_alcohol_count' => 0,
                 'physical_activity_count' => 0,
-                'has_disorder_count' => 0,
                 'has_medical_history_count' => 0,
                 'has_allergies_count' => 0,
             ];
@@ -47,15 +49,24 @@ readonly class DiagnosisService
         $smokerCount = 0;
         $drinksAlcoholCount = 0;
         $physicalActivityCount = 0;
-        $hasDisorderCount = 0;
         $hasMedicalHistoryCount = 0;
         $hasAllergiesCount = 0;
+        $mentalDisorderCount = 0;
+        $physicalDisorderCount = 0;
 
         foreach ($diagnoses as $diagnosis) {
             if (false === $this->validateDiagnosis($diagnosis)) {
                 continue;
             }
 
+            // Count based on disorder type
+            if ($diagnosis['disorder_type'] === DisorderType::MENTAL) {
+                $mentalDisorderCount++;
+            } elseif ($diagnosis['disorder_type'] === DisorderType::PHYSICAL) {
+                $physicalDisorderCount++;
+            }
+
+            // Count other stats
             if ($diagnosis['smoker']) {
                 $smokerCount++;
             }
@@ -64,9 +75,6 @@ readonly class DiagnosisService
             }
             if ($diagnosis['physical_activity']) {
                 $physicalActivityCount++;
-            }
-            if ($diagnosis['has_disorder_type']) {
-                $hasDisorderCount++;
             }
             if ($diagnosis['has_medical_history']) {
                 $hasMedicalHistoryCount++;
@@ -79,10 +87,11 @@ readonly class DiagnosisService
         $totalDiagnoses = \count($diagnoses);
 
         return [
+            'mental_disorder_count' => $mentalDisorderCount > 0 ? round(($mentalDisorderCount / $totalDiagnoses) * 100) : 0,
+            'physical_disorder_count' => $physicalDisorderCount > 0 ? round(($physicalDisorderCount / $totalDiagnoses) * 100) : 0,
             'smoker_count' => $smokerCount > 0 ? round(($smokerCount / $totalDiagnoses) * 100) : 0,
             'drinks_alcohol_count' => $drinksAlcoholCount > 0 ? round(($drinksAlcoholCount / $totalDiagnoses) * 100) : 0,
             'physical_activity_count' => $physicalActivityCount > 0 ? round(($physicalActivityCount / $totalDiagnoses) * 100) : 0,
-            'has_disorder_count' => $hasDisorderCount > 0 ? round(($hasDisorderCount / $totalDiagnoses) * 100) : 0,
             'has_medical_history_count' => $hasMedicalHistoryCount > 0 ? round(($hasMedicalHistoryCount / $totalDiagnoses) * 100) : 0,
             'has_allergies_count' => $hasAllergiesCount > 0 ? round(($hasAllergiesCount / $totalDiagnoses) * 100) : 0,
         ];
@@ -91,7 +100,7 @@ readonly class DiagnosisService
     private function validateDiagnosis(array $diagnosis): bool
     {
         $requiredKeys = [
-            'has_disorder_type' => null,
+            'disorder_type' => null,
             'has_medical_history' => null,
             'physical_activity' => null,
             'smoker' => null,
