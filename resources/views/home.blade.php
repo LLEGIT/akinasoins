@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('home')
+@section('content')
 <div class="flex flex-col space-y-4">
     <a href="{{ route('questions')}}" class="bg-blue-500 text-white font-bold py-2 px-4 rounded inline-block">Démarrer
         le diagnostique</a>

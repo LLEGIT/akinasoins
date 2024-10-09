@@ -17,9 +17,8 @@ protected $diagnosisService;
     public function index()
     {
 
-        $pourcent = $this->diagnosisService->getStatistics();
+        $array_stat = $this->diagnosisService->getStatistics();
 
-
-        return view('statistics', compact('pourcent'));
+        return view('statistics', $array_stat);
     }
 }
