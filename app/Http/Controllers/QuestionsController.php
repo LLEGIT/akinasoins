@@ -1,43 +1,101 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Enums\DisorderType;
+use Illuminate\Http\Client\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class QuestionsController extends Controller
 {
-    public function show($page = 1)
-    {
-        $allQuestions = [
-            1 => ['id' => 1, 'titre' => 'Quel trouble pensez vous avoir ?'],
-            2 => ['id' => 2, 'titre' => 'Avez-vous des antécédents médicaux importants ?'],
-            3 => ['id' => 3, 'titre' => 'Pratiquez-vous régulièrement une activité physique ?'],
-            4 => ['id' => 4, 'titre' => 'Consommez-vous des substances comme le tabac, l’alcool ou des drogues ?']
-        ];
+    private const QUESTIONS = [
+        [
+            'id' => 1,
+            'titre' => 'De quel type de troubles souffrez vous ?',
+            'reponses' => [
+                DisorderType::MENTAL,
+                DisorderType::PHYSICAL,
+            ],
+            'column' => 'disorder_type',
+        ],
+        [
+            'id' => 2,
+            'titre' => 'Avez vous des antécédents médicaux ?',
+            'reponses' => [
+                'oui',
+                'non',
+            ],
+            'column' => 'has_medical_history',
+        ],
+        [
+            'id' => 3,
+            'titre' => 'Pratiquez vous une activité physique régulière ?',
+            'reponses' => [
+                'oui',
+                'non',
+            ],
+            'column' => 'physical_activity',
+        ],
+        [
+            'id' => 4,
+            'titre' => 'Etes vous fumeur ?',
+            'reponses' => [
+                'oui',
+                'non',
+            ],
+            'column' => 'smoker',
+        ],
+        [
+            'id' => 5,
+            'titre' => 'Buvez vous de l\'alccol ?',
+            'reponses' => [
+                'oui',
+                'non',
+            ],
+            'column' => 'drinks_alcohol'
+        ],
+        [
+            'id' => 6,
+            'titre' => 'Avez vous des allergies ?',
+            'reponses' => [
+                'oui',
+                'non',
+            ],
+            'column' => 'has_allergies',
+        ],
+    ];
 
-        // Vérifier la validité de la page et obtenir la question
-        if (!isset($allQuestions[$page])) {
-            return redirect()->route('questions.page', ['page' => 1]);
+
+    public function show(string $question): View
+    {
+        if (
+            false === (is_numeric($question)) ||
+            \count(self::QUESTIONS) < $question
+        ) {
+            return view('home');
         }
 
-        $question = $allQuestions[$page];
-        $nextPage = ($page < count($allQuestions)) ? $page + 1 : 1;
+        $questionData = self::QUESTIONS[$question - 1] ?? null;
 
-        return view('questions', compact('question', 'nextPage', 'page'));
+        if (null === $questionData) {
+            return view('home');
+        }
+
+        $nextPage = ($question < count(self::QUESTIONS)) ? (int) $question + 1 : 1;
+
+        return view('questions', [
+            'question' => $questionData,
+            'nextPage' => $nextPage,
+        ]);
     }
 
-    // Gestion de la soumission de la réponse
-    public function submitAnswer(Request $request, $page)
-    {
-        // Récupérer l'ID de la question et la réponse
-        $questionId = $request->input('question_id');
-        $answer = $request->input('answer');
+    public function submitAnswer(Request $request, string $question): RedirectResponse {
+        dd($request);
 
-        // Enregistrer la réponse (en pratique, dans une base de données)
-        // Exemple : Réponses en session pour illustrer
-        session()->put("answers.$questionId", $answer);
-
-        // Rediriger vers la question suivante
-        return redirect()->route('questions.page', ['page' => $page + 1]);
+        return redirect()->to('http://heera.it');
     }
+
 }
