@@ -40,4 +40,9 @@ class DiagnosisController extends Controller
         return new JsonResponse($this->diagnosisService->getStatistics(), Response::HTTP_OK);
     }
 
+    public function getStats ()
+    {
+        return view('stats');
+    }
+
 }
