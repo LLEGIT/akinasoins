@@ -1,26 +1,25 @@
 @extends('layout')
 
 @section('content')
-<div class="md:w-1/2 w-full bg-white p-6 rounded-lg shadow-md">
+<div class="md:w-1/2 w-full bg-white p-6 rounded-lg">
     <h2 class="text-2xl font-semibold mb-4">{{ $question['titre'] }}</h2>
 
     <div class="flex space-x-4">
-        <form method="POST" action="{{ route('question.answer', ['page' => $page]) }}">
+        <form method="POST" action="{{ $question['id'] ? route('questions.answer', $question['id']) : route('chatgpt.ask', $nextStep ?? 1) }}">
             @csrf
-            <input type="hidden" name="question_id" value="{{ $question['id'] }}">
-
-            <button type="submit" name="answer" value="oui"
-                class="px-4 py-2 bg-green-500 text-white rounded-lg">Oui</button>
-            <button type="submit" name="answer" value="non"
-                class="px-4 py-2 bg-red-500 text-white rounded-lg">Non</button>
-            <button type="submit" name="answer" value="peut-être"
-                class="px-4 py-2 bg-yellow-500 text-white rounded-lg">Peut-être</button>
+            @foreach ($question['reponses'] as $key => $reponse)
+                @php
+                    $bgColor = '';
+                    if ($key === 1) {
+                        $bgColor = 'bg-tealDeer';
+                    } else {
+                        $bgColor = 'bg-ruddyPink';
+                    }
+                @endphp
+                <button type="submit" name="answer" value="{{ $reponse }}"
+                        class="px-4 py-2 {{ $bgColor }} text-white rounded-lg">{{ $reponse }}</button>
+            @endforeach
         </form>
-    </div>
-
-    <div class="mt-6">
-        <a href="{{ route('questions.page', ['page' => $nextPage]) }}"
-            class="px-4 py-2 bg-blue-500 text-white rounded-lg">Question suivante</a>
     </div>
 </div>
 @endsection

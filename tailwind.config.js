@@ -6,11 +6,17 @@ export default {
         "./resources/**/*.vue",
     ],
     theme: {
+        fontFamily: {
+            irish: ['"Irish Grover"', 'cursive'],
+        },
         extend: {
-                colors: {
-                  customRed: '#E49696',  // Nom de ta couleur personnalisée
-                },
-            },
+            colors: {
+                'ruddyPink': '#E49696',
+                'tealDeer': '#96E4B9',
+                'pastelGray': '#CACCC5',
+                'cornFlower': '#96CDE4',
+            }
+        },
     },
     plugins: [],
 }

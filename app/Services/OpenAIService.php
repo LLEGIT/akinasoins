@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 
 class OpenAIService
 {
@@ -19,23 +22,28 @@ class OpenAIService
             'verify' => false,  // Ajoutez cette ligne pour désactiver la vérification SSL
 
         ]);
-        
+
     }
 
-    public function getChatGPTResponse($prompt)
+    public function getChatGPTResponse(array $prompt): string
     {
-        $response = $this->client->post('chat/completions', [
-            'json' => [
-                'model' => 'gpt-4o-mini', 
-                'messages' => [ 
-                    ['role' => 'user', 'content' => $prompt],
+        try {
+            $response = $this->client->post('chat/completions', [
+                'json' => [
+                    'model' => 'gpt-4o-mini',
+                    'messages' => $prompt,
+                    'max_tokens' => 100,
                 ],
-                'max_tokens' => 100,
-                'temperature' => 0.3,  
-            ],
-        ]);
+            ]);
+        } catch (GuzzleException $exception) {
+            return $exception->getMessage();
+        }
 
-        $body = json_decode($response->getBody(), true);
+        if (null === ($response->getBody())) {
+            return 'Je n\'ai pas pu répondre à la question';
+        }
+
+        $body = json_decode((string) $response->getBody(), true);
         return $body['choices'][0]['message']['content'];
     }
 }
