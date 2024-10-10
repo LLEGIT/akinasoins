@@ -6,7 +6,11 @@ export default {
         "./resources/**/*.vue",
     ],
     theme: {
-        extend: {},
+        extend: {
+                colors: {
+                  customRed: '#E49696',  // Nom de ta couleur personnalisée
+                },
+            },
     },
     plugins: [],
 }

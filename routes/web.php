@@ -30,3 +30,5 @@ Route::get('/questions', [ChatGPTController::class, 'initialize_game']);
 Route::get('/recommendations', function () {
     return view('recommendations');
 })->name('recommendations');
+
+Route::view('/stats', 'stats');
