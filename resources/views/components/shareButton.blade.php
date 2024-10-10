@@ -1,4 +1,4 @@
-<img class="w-20 h-16" src="{{ asset('images/shareButton.png') }}" alt="logo akinasoins" class="max-w-full h-auto" onclick="handleShareButton()">
+<img class="w-auto h-12" src="{{ asset('images/shareButton.png') }}" alt="logo akinasoins" class="max-w-full h-auto" onclick="handleShareButton()">
 
 <script>
     function handleShareButton() {

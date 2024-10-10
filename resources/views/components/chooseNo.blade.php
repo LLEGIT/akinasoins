@@ -1,4 +1,4 @@
-<img class="w-64 h-24" src="{{ asset('images/chooseNoButton.png') }}" alt="logo akinasoins" class="max-w-full h-auto" onclick="handleNoButton()">
+<img class="w-48 h-16 lg:w-64 lg:h-20" src="{{ asset('images/chooseNoButton.png') }}" alt="logo akinasoins" class="max-w-full h-auto" onclick="handleNoButton()">
 
 <script>
     function handleNoButton() {

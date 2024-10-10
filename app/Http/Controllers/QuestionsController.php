@@ -16,7 +16,7 @@ class QuestionsController extends Controller
     private const QUESTIONS = [
         [
             'id' => 1,
-            'titre' => 'De quel type de troubles souffrez vous ?',
+            'titre' => 'Quels troubles pensez vous avoir ?',
             'reponses' => [
                 DisorderType::MENTAL,
                 DisorderType::PHYSICAL,

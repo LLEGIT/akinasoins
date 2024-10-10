@@ -60,9 +60,9 @@ readonly class DiagnosisService
             }
 
             // Count based on disorder type
-            if ($diagnosis['disorder_type'] === DisorderType::MENTAL) {
+            if ($diagnosis['disorder_type'] === DisorderType::MENTAL->value) {
                 $mentalDisorderCount++;
-            } elseif ($diagnosis['disorder_type'] === DisorderType::PHYSICAL) {
+            } elseif ($diagnosis['disorder_type'] === DisorderType::PHYSICAL->value) {
                 $physicalDisorderCount++;
             }
 

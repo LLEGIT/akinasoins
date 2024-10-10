@@ -78,12 +78,6 @@ class ChatGPTController extends Controller
 
         if (\str_contains($response, 'Diagnostic')) {
             $response = \str_replace(
-                'Possibilités de traitement :',
-                '<br>Possibilités de traitement :<br>',
-                $response,
-            );
-
-            $response = \str_replace(
                 '**',
                 '',
                 $response,
@@ -92,12 +86,6 @@ class ChatGPTController extends Controller
             $response = \str_replace(
                 '###',
                 '',
-                $response,
-            );
-
-            $response = \str_replace(
-                ' :',
-                ' :<br>',
                 $response,
             );
 
@@ -215,7 +203,7 @@ class ChatGPTController extends Controller
 
         return view('questions', [
             'question' => $question,
-            'nextStep' => 1,
+            'nextStep' => 2,
         ]);
     }
 }
