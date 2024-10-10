@@ -1,0 +1,86 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Akinasoins",
+        "description": "API pour interagir avec ChatGPT pour un jeu de devinettes médicales.",
+        "contact": {
+            "email": "support@akinasoins.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/ask": {
+            "post": {
+                "summary": "Envoyer un prompt à ChatGPT et recevoir une réponse",
+                "operationId": "e213adb1182a526e8c48f26dbdcc4635",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "response": {
+                                        "description": "Le prompt ou la question à envoyer à ChatGPT",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Réponse réussie",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "response": {
+                                            "description": "La réponse de ChatGPT",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requête incorrecte"
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                }
+            }
+        },
+        "/initialize-game": {
+            "get": {
+                "summary": "Initialiser un jeu de devinettes médicales avec ChatGPT",
+                "operationId": "c21340a767926ad49286bee1c1c6d315",
+                "responses": {
+                    "200": {
+                        "description": "Jeu initialisé avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "response": {
+                                            "description": "La première question de ChatGPT pour commencer le jeu",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                }
+            }
+        }
+    }
+}
