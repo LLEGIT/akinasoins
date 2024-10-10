@@ -16,13 +16,20 @@
 
 <body class="h-screen w-screen">
     <div class="h-screen flex flex-col md:flex-row">
-
-        <div class="flex-1 flex items-center justify-center">
-            <img src="{{ asset('images/akinasoins_logo.webp') }}" alt="logo akinasoins" class="max-w-full h-auto">
+        <div class="absolute cursor-pointer {{ Route::current()->getName() == 'home' ? 'hidden' : '' }} top-4 left-4">
+            @include('components/returnHomeButton')
         </div>
 
-        <div class="flex-1 flex items-center justify-center">
+        <div >
+            <img src="{{ asset('images/akinasoins_logo.webp') }}" alt="logo akinasoins" class="w-full h-auto">
+        </div>
+
+        <div class="flex flex-col items-center">
             @yield('content')
+        </div>
+
+        <div class="absolute bottom-0 right-0 {{ Route::current()->getName() == 'recommendations' ? 'hidden' : '' }}">
+            <img src="{{ asset('/images/label-sante.png') }}">
         </div>
     </div>
 
