@@ -1,10 +1,10 @@
 @extends('layout')
 
 @section('content')
-<div class="flex h-screen justify-center m-8">
+<div class="flex justify-center">
 
     <div class="lg:w-2/3 flex items-center justify-center">
-        <div class="grid grid-cols-2 gap-0 mt-0 lg:mt-8">
+        <div class="grid grid-cols-2 gap-0 mt-0">
             <div class="flex flex-col justify-center items-center bg-slate-400 p-6 h-64">
                 <img src="{{ asset('images/logo_activite_physique.png') }}"
                     alt="Pratiquer une activité physique régulière">

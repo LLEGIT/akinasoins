@@ -13,7 +13,7 @@
 </head>
 
 <body class="h-screen w-screen">
-    <div class="w-screen h-screen flex flex-col md:flex-row">
+    <div class="h-screen flex flex-col md:flex-row">
 
         <div class="flex-1 flex items-center justify-center">
             <img src="{{ asset('images/akinasoins_logo.webp') }}" alt="logo akinasoins" class="max-w-full h-auto">
