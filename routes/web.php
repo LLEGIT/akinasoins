@@ -26,3 +26,4 @@ Route::post('/diagnosis', [DiagnosisController::class, 'create']);
 Route::get('/diagnosis/all', [DiagnosisController::class, 'getAll']);
 Route::get('/diagnosis/statistics', [DiagnosisController::class, 'getStatistics']);
 Route::get('/questions', [ChatGPTController::class, 'initialize_game']);
+Route::view('/stats', 'stats');
