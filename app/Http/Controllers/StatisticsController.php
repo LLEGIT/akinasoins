@@ -16,7 +16,6 @@ protected $diagnosisService;
 
     public function index()
     {
-
         $array_stat = $this->diagnosisService->getStatistics();
 
         return view('statistics', $array_stat);

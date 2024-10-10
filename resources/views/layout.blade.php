@@ -15,23 +15,33 @@
 </head>
 
 <body class="h-screen w-screen">
-    <div class="h-screen flex flex-col md:flex-row">
-        <div class="absolute cursor-pointer {{ Route::current()->getName() == 'home' ? 'hidden' : '' }} top-4 left-4">
-            @include('components/returnHomeButton')
+<div class="h-screen flex flex-col ">
+    <div class="hidden lg:block">
+        @include('components.header')
+    </div>
+
+    <div class="absolute lg:hidden {{ Route::current()->getName() == 'home' ? 'hidden' : '' }} top-4 left-4">
+        @include('components.returnHomeButton')
+    </div>
+
+    <div class="lg:flex lg:px-60 lg:mt-5 lg:justify-between lg:items-center">
+        <div>
+            <img src="{{ asset('images/akinasoins_logo.webp') }}" alt="logo akinasoins"
+                 class="w-full h-auto lg:w-auto lg:h-[642px] lg:rounded-2xl">
         </div>
 
-        <div >
-            <img src="{{ asset('images/akinasoins_logo.webp') }}" alt="logo akinasoins" class="w-full h-auto">
-        </div>
-
-        <div class="flex flex-col items-center">
+        <div class="flex flex-col items-center lg:block">
+            <div class="hidden lg:mb-4 cursor-pointer {{ Route::current()->getName() == 'home' ? 'hidden' : 'lg:block' }}">
+                @include('components.returnHomeButton')
+            </div>
             @yield('content')
         </div>
-
-        <div class="absolute bottom-0 right-0 {{ Route::current()->getName() == 'recommendations' ? 'hidden' : '' }}">
-            <img src="{{ asset('/images/label-sante.png') }}">
-        </div>
     </div>
+
+    <div class="absolute bottom-0 right-0 lg:bottom-5 lg:right-5 {{ Route::current()->getName() == 'recommendations' ? 'hidden' : '' }}">
+        <img src="{{ asset('/images/label-sante.png') }}">
+    </div>
+</div>
 
 </body>
 

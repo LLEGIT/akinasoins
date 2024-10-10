@@ -203,7 +203,7 @@ class ChatGPTController extends Controller
 
         return view('questions', [
             'question' => $question,
-            'nextStep' => 1,
+            'nextStep' => 2,
         ]);
     }
 }
