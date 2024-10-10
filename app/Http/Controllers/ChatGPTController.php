@@ -6,9 +6,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
-use App\Services\OpenAIService;
 use Illuminate\View\View;
+use App\Services\OpenAIService;
 
+/**
+ * @OA\Info(
+ *     title="API Akinasoins",
+ *     version="1.0.0",
+ *     description="API pour interagir avec ChatGPT pour un jeu de devinettes médicales.",
+ *     @OA\Contact(
+ *         email="support@akinasoins.com"
+ *     )
+ * )
+ */
 class ChatGPTController extends Controller
 {
     protected $openAIService;
@@ -18,7 +28,43 @@ class ChatGPTController extends Controller
     {
         $this->openAIService = $openAIService;
     }
-
+    /**
+     * @OA\Post(
+     *     path="/ask",
+     *     summary="Envoyer un prompt à ChatGPT et recevoir une réponse",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="response",
+     *                 type="string",
+     *                 description="Le prompt ou la question à envoyer à ChatGPT"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Réponse réussie",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="response",
+     *                 type="string",
+     *                 description="La réponse de ChatGPT"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Requête incorrecte"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Erreur interne du serveur"
+     *     )
+     * )
+     */
     public function ask(Request $request, string $step): View
     {
         if (false === \is_numeric($step)) {
@@ -109,6 +155,28 @@ class ChatGPTController extends Controller
         ]);
     }
 
+        /**
+     * @OA\Get(
+     *     path="/initialize-game",
+     *     summary="Initialiser un jeu de devinettes médicales avec ChatGPT",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Jeu initialisé avec succès",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="response",
+     *                 type="string",
+     *                 description="La première question de ChatGPT pour commencer le jeu"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Erreur interne du serveur"
+     *     )
+     * )
+     */
     public function initializeGame(string $disorderType): View
     {
         $promptInstructions = [
@@ -133,6 +201,7 @@ class ChatGPTController extends Controller
                 ],
             ],
         ]);
+
         $response = $this->openAIService->getChatGPTResponse(Session::get('current_prompt'));
 
         $question = [
