@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Enums\DisorderType;
-use Illuminate\Http\Client\Request;
+use App\Models\Diagnosis;
+use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
 class QuestionsController extends Controller
@@ -78,24 +80,67 @@ class QuestionsController extends Controller
             return view('home');
         }
 
-        $questionData = self::QUESTIONS[$question - 1] ?? null;
+        $questionData = self::QUESTIONS[(int) $question - 1] ?? null;
 
         if (null === $questionData) {
             return view('home');
         }
 
-        $nextPage = ($question < count(self::QUESTIONS)) ? (int) $question + 1 : 1;
-
         return view('questions', [
             'question' => $questionData,
-            'nextPage' => $nextPage,
         ]);
     }
 
-    public function submitAnswer(Request $request, string $question): RedirectResponse {
-        dd($request);
+    public function submitAnswer(Request $request, string $question): RedirectResponse
+    {
+        if (false === \is_numeric($question)) {
+            return redirect()->route('home');
+        }
 
-        return redirect()->to('http://heera.it');
+        $content = $request->getContent() ?? null;
+
+        if (null === $content) {
+            return redirect()->route('home');
+        }
+
+        $parsedData = [];
+
+        parse_str($content, $parsedData);
+
+        $answer = $parsedData['answer'] ?? null;
+
+        if (null === $answer) {
+            return redirect()->route('questions', (int) $question);
+        }
+
+        $questionsAnswered = Session::get('questionsAnswered') ?? null;
+
+        if (null === $questionsAnswered) {
+            Session::put('questionsAnswered', [
+                self::QUESTIONS[(int) $question - 1]['column'] => $answer,
+            ]);
+        } else {
+            Session::put('questionsAnswered', [
+                ...$questionsAnswered,
+                self::QUESTIONS[(int) $question - 1]['column'] => $answer,
+            ]);
+        }
+
+        if ((int) $question === \count(self::QUESTIONS)) {
+            $questionsAnswered = \array_map(function (string $answer) {
+                return $answer === 'oui' ? true : ($answer === 'non' ? false : $answer);
+            }, $questionsAnswered);
+
+            $newDiagnosis = new Diagnosis($questionsAnswered);
+
+            if (false === $newDiagnosis->save()) {
+                throw new \Exception('Error saving diagnosis');
+            }
+
+            return redirect()->route('chatgpt.initialize', $questionsAnswered['disorder_type']);
+        }
+
+        return redirect()->route('questions', (int) $question + 1);
     }
 
 }

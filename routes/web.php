@@ -7,11 +7,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\DiagnosisController;
 
-Route::post('/ask-chatgpt', [ChatGPTController::class, 'ask'])->name('ask.chatgpt');
-Route::get('/', [HomeController::class, 'show']);
+Route::get('/', [HomeController::class, 'show'])->name('home');
 Route::get('/statistics', [StatisticsController::class, 'index'])->name('statistics');
 
-Route::post('/diagnosis', [DiagnosisController::class, 'create']);
 Route::get('/diagnosis/all', [DiagnosisController::class, 'getAll']);
 Route::get('/diagnosis/statistics', [DiagnosisController::class, 'getStatistics']);
 
@@ -25,3 +23,6 @@ Route::get('/recommendations', function () {
 })->name('recommendations');
 
 Route::view('/stats', 'stats');
+
+Route::get('/initialize-diagnosis/{disorderType}', [ChatGPTController::class, 'initializeGame'])->name('chatgpt.initialize');
+Route::post('/diagnosis/{step}', [ChatGPTController::class, 'ask'])->name('chatgpt.ask');

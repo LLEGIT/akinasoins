@@ -1,11 +1,11 @@
 @extends('layout')
 
 @section('content')
-<div class="md:w-1/2 w-full bg-white p-6 rounded-lg shadow-md">
+<div class="md:w-1/2 w-full bg-white p-6 rounded-lg">
     <h2 class="text-2xl font-semibold mb-4">{{ $question['titre'] }}</h2>
 
     <div class="flex space-x-4">
-        <form method="POST" action="{{ route('questions.answer', $question['id']) }}">
+        <form method="POST" action="{{ $question['id'] ? route('questions.answer', $question['id']) : route('chatgpt.ask', $nextStep ?? 1) }}">
             @csrf
             @foreach ($question['reponses'] as $key => $reponse)
                 @php

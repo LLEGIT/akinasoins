@@ -6,6 +6,9 @@ export default {
         "./resources/**/*.vue",
     ],
     theme: {
+        fontFamily: {
+            irish: ['"Irish Grover"', 'cursive'],
+        },
         extend: {
             colors: {
                 'ruddyPink': '#E49696',
