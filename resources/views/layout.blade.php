@@ -24,13 +24,13 @@
         @include('components.returnHomeButton')
     </div>
 
-    <div class="lg:flex lg:px-60 lg:mt-5 lg:justify-between lg:items-center">
+    <div class="lg:flex lg:px-40 lg:mt-5 lg:gap-x-5 lg:items-center">
         <div>
             <img src="{{ asset('images/akinasoins_logo.webp') }}" alt="logo akinasoins"
-                 class="w-full h-auto lg:w-auto lg:h-[642px] lg:rounded-2xl">
+                 class="w-full h-auto lg:w-[80%] lg:rounded-2xl">
         </div>
 
-        <div class="flex flex-col items-center lg:block">
+        <div class="flex flex-col items-center lg:block lg:w-[80%]">
             <div class="hidden lg:mb-4 cursor-pointer {{ Route::current()->getName() == 'home' ? 'hidden' : 'lg:block' }}">
                 @include('components.returnHomeButton')
             </div>
